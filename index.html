@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corazón roto · buzón</title>
+<style>
+:root{--bg1:#171a21;--bg2:#0b0c10;--txt:#b8b2ad;--tenue:#6f6b70;--vidrio:rgba(190,205,220,.38)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:radial-gradient(ellipse at 50% 25%,var(--bg1),var(--bg2) 70%) fixed;color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;padding:28px 18px 40px;overflow-x:hidden;min-height:100vh}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:normal;font-style:italic;font-size:1.9rem;letter-spacing:.5px;color:#cfc7c2;text-align:center}
+.sub{color:var(--tenue);font-size:.95rem;margin-top:6px;text-align:center}
+.escena{width:min(92vw,400px);margin:22px 0 8px}
+svg{width:100%;height:auto;display:block;overflow:visible}
+.contador{color:var(--tenue);font-size:.9rem;text-align:center;min-height:1.2em}
+form{position:relative;width:min(92vw,400px);display:flex;flex-direction:column;gap:10px;margin-top:22px}
+input,textarea{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:10px;color:#ddd6d1;padding:12px 14px;font:inherit;font-size:16px;outline:none;resize:none}
+input::placeholder,textarea::placeholder{color:#5d5a60}
+input:focus,textarea:focus{border-color:rgba(138,90,99,.7)}
+textarea{min-height:120px}
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.cuenta{font-size:.75rem;color:#55525a;text-align:right;margin-top:-6px}
+button{background:#3b2c33;color:#e2d6d6;border:1px solid #5a3f48;border-radius:10px;padding:13px;font:inherit;font-size:1rem;cursor:pointer;transition:background .2s,opacity .2s}
+button:hover{background:#4a3540}
+button:disabled{opacity:.5;cursor:default}
+.estado{min-height:1.3em;font-size:.9rem;text-align:center;color:var(--tenue)}
+.polvo{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.polvo i{position:absolute;top:-10px;width:2px;height:2px;border-radius:50%;background:rgba(200,200,215,.22);animation:caer linear infinite}
+@keyframes caer{to{transform:translate(24px,110vh)}}
+@keyframes latir{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+.latido{transform-origin:160px 170px;animation:latir 4.5s ease-in-out infinite}
+.nuevo{opacity:0;transition:opacity .9s ease}
+</style>
+</head>
+<body>
+<div class="polvo" id="polvo"></div>
+
+<h1>Corazón roto</h1>
+<p class="sub">Déjame un papelito. Solo yo lo voy a leer.</p>
+
+<div class="escena">
+<svg viewBox="0 0 320 300" role="img" aria-label="Corazón de vidrio roto lleno de papelitos">
+  <defs>
+    <path id="forma" d="M160 275 C 60 205, 12 150, 22 95 C 32 40, 100 22, 160 78 C 220 22, 288 40, 298 95 C 308 150, 260 205, 160 275 Z"/>
+    <clipPath id="clipCorazon"><use href="#forma"/></clipPath>
+    <clipPath id="clipIzq"><polygon points="-20,-20 160,-20 160,78 148,108 170,136 146,166 168,196 150,226 162,252 160,275 160,320 -20,320"/></clipPath>
+    <clipPath id="clipDer"><polygon points="340,-20 160,-20 160,78 148,108 170,136 146,166 168,196 150,226 162,252 160,275 160,320 340,320"/></clipPath>
+    <linearGradient id="gVidrio" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fb0c4" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#5b6577" stop-opacity=".05"/>
+    </linearGradient>
+    <g id="corazon">
+      <use href="#forma" fill="url(#gVidrio)"/>
+      <g id="papeles" clip-path="url(#clipCorazon)"></g>
+      <use href="#forma" fill="none" stroke="var(--vidrio)" stroke-width="2.2"/>
+      <path d="M46 96 C 50 68, 76 52, 104 56" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M232 60 C 252 58, 270 70, 276 88" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="2" stroke-linecap="round"/>
+      <g fill="none" stroke="rgba(215,225,235,.45)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="160,78 148,108 170,136 146,166 168,196 150,226 162,252 160,275"/>
+        <polyline points="148,108 128,100 116,112"/>
+        <polyline points="146,166 124,174 112,168"/>
+        <polyline points="170,136 194,128 206,140"/>
+        <polyline points="168,196 190,206 202,199"/>
+        <polyline points="236,92 220,76"/>
+        <polyline points="236,92 258,84 266,90"/>
+        <polyline points="236,92 250,112"/>
+        <polyline points="236,92 222,108 214,106"/>
+        <polyline points="76,190 90,176 86,160"/>
+        <polyline points="60,120 72,128"/>
+      </g>
+      <rect x="58" y="46.5" width="40" height="5" rx="2.5" fill="#07080b" stroke="rgba(215,225,235,.35)" stroke-width="1" transform="rotate(-6 78 49)"/>
+    </g>
+  </defs>
+  <g class="latido">
+    <use href="#corazon" clip-path="url(#clipIzq)" transform="translate(-5 3) rotate(-2.5 160 275)"/>
+    <use href="#corazon" clip-path="url(#clipDer)" transform="translate(5 3) rotate(2.5 160 275)"/>
+  </g>
+  <g id="cayendo"></g>
+</svg>
+</div>
+
+<p class="contador" id="contador"></p>
+
+<form id="form" autocomplete="off">
+  <input id="nombre" type="text" maxlength="40" placeholder="Tu nombre" required>
+  <textarea id="mensaje" maxlength="500" placeholder="Escribe tu mensaje…" required></textarea>
+  <div class="cuenta" id="cuenta">0 / 500</div>
+  <input class="trampa" id="trampa" type="text" tabindex="-1" aria-hidden="true">
+  <button id="btn" type="submit">Dejar mi papelito</button>
+  <p class="estado" id="estado"></p>
+</form>
+
+<script type="module">
+// ===== Datos de tu proyecto de Firebase =====
+const firebaseConfig = {
+  apiKey: "AIzaSyAs0cRogG-nTgDrejP3a54bkUBnLtmyf8A",
+  authDomain: "corazon-roto-a8b96.firebaseapp.com",
+  projectId: "corazon-roto-a8b96",
+  storageBucket: "corazon-roto-a8b96.firebasestorage.app",
+  messagingSenderId: "703369236778",
+  appId: "1:703369236778:web:a1226c8a80dcf8eb29ce53"
+};
+// ============================================
+
+const NS = "http://www.w3.org/2000/svg";
+const $ = id => document.getElementById(id);
+const demo = firebaseConfig.apiKey.startsWith("PEGA");
+
+// Polvo cayendo de fondo
+for (let i = 0; i < 26; i++) {
+  const p = document.createElement("i");
+  p.style.left = Math.random() * 100 + "vw";
+  const d = 14 + Math.random() * 18;
+  p.style.animationDuration = d + "s";
+  p.style.animationDelay = -Math.random() * d + "s";
+  p.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
+  $("polvo").appendChild(p);
+}
+
+// Generador pseudoaleatorio con semilla (los papelitos siempre quedan en el mismo lugar)
+function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const R = rng(20261114);
+
+// Lugares posibles dentro del corazón, de abajo hacia arriba
+const ctx = document.createElement("canvas").getContext("2d");
+const heart = new Path2D($("forma").getAttribute("d"));
+const dentro = (x, y) => ctx.isPointInPath(heart, x, y);
+const colores = ["#cbbfb0", "#b7aca3", "#a99a9c", "#9ea6b0", "#bfae9e", "#8f8790", "#c2b6b8", "#a3958a"];
+let lugares = [];
+for (let i = 0; i < 6000 && lugares.length < 700; i++) {
+  const x = 24 + R() * 272, y = 60 + R() * 214;
+  if ([[0,0],[-9,-7],[9,-7],[-9,7],[9,7]].every(([dx, dy]) => dentro(x + dx, y + dy))) {
+    lugares.push({ x, y, orden: y + R() * 16, rot: (R() - .5) * 80, color: colores[Math.floor(R() * colores.length)], rayas: R() > .4 });
+  }
+}
+lugares.sort((a, b) => b.orden - a.orden);
+lugares = lugares.slice(0, 340);
+
+function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function papel(x, y, rot, color, rayas) {
+  const g = el("g", { transform: `translate(${x} ${y}) rotate(${rot})` });
+  g.appendChild(el("rect", { x: -10, y: -7, width: 20, height: 14, rx: 1.2, fill: color, stroke: "rgba(0,0,0,.28)", "stroke-width": .5 }));
+  g.appendChild(el("line", { x1: 0, y1: -7, x2: 0, y2: 7, stroke: "rgba(0,0,0,.2)", "stroke-width": .6 }));
+  if (rayas) {
+    g.appendChild(el("line", { x1: -6, y1: -2, x2: -2, y2: -2, stroke: "rgba(60,50,55,.25)", "stroke-width": .5 }));
+    g.appendChild(el("line", { x1: -6, y1: 1, x2: -3, y2: 1, stroke: "rgba(60,50,55,.25)", "stroke-width": .5 }));
+  }
+  return g;
+}
+
+// Pintar papelitos
+let total = 0, pintados = 0, animando = false;
+function pintar(nuevo = false) {
+  const meta = Math.min(total - (animando ? 1 : 0), lugares.length);
+  const cont = $("papeles");
+  if (meta < pintados) { cont.innerHTML = ""; pintados = 0; }
+  while (pintados < meta) {
+    const l = lugares[pintados];
+    const g = papel(l.x, l.y, l.rot, l.color, l.rayas);
+    if (nuevo) { g.classList.add("nuevo"); requestAnimationFrame(() => requestAnimationFrame(() => g.style.opacity = 1)); }
+    cont.appendChild(g);
+    pintados++;
+  }
+  $("contador").textContent = total === 0 ? "Todavía no hay papelitos." : total === 1 ? "1 papelito guardado" : `${total} papelitos guardados`;
+}
+
+// Ranura del buzón (posición real tras inclinar la mitad izquierda)
+function ranura() {
+  const a = -2.5 * Math.PI / 180, dx = 78 - 160, dy = 49 - 275;
+  return { x: 160 + dx * Math.cos(a) - dy * Math.sin(a) - 5, y: 275 + dx * Math.sin(a) + dy * Math.cos(a) + 3 };
+}
+function caer() {
+  return new Promise(res => {
+    const r = ranura(), capa = $("cayendo");
+    const p = papel(0, 0, 0, colores[Math.floor(Math.random() * colores.length)], true);
+    capa.appendChild(p);
+    const t0 = performance.now(), T1 = 1000, T2 = 350;
+    function paso(t) {
+      const e = t - t0;
+      if (e < T1) {
+        const k = e / T1, ease = k * k;
+        const x = r.x + Math.sin(k * Math.PI * 2) * 10 * (1 - k), y = -40 + (r.y + 40) * ease;
+        p.setAttribute("transform", `translate(${x} ${y}) rotate(${Math.sin(k * 6) * 25 - 6})`);
+      } else if (e < T1 + T2) {
+        const k = (e - T1) / T2;
+        p.setAttribute("transform", `translate(${r.x} ${r.y + 3 * k}) rotate(-6) scale(${1 - .8 * k} ${1 - k})`);
+        p.style.opacity = 1 - k;
+      } else { p.remove(); return res(); }
+      requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  });
+}
+
+// Conexión
+let enviar;
+if (demo) {
+  total = 23; pintar();
+  $("estado").textContent = "Vista previa: aún no está conectado a Firebase.";
+  enviar = () => new Promise(r => setTimeout(() => { total++; r(); }, 400));
+} else {
+  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const { getFirestore, doc, collection, writeBatch, serverTimestamp, increment, onSnapshot } =
+    await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+  const db = getFirestore(initializeApp(firebaseConfig));
+  const contadorRef = doc(db, "stats", "contador");
+  pintar();
+  onSnapshot(contadorRef, s => { total = s.exists() ? (s.data().total || 0) : 0; pintar(true); },
+    () => { $("contador").textContent = ""; });
+  enviar = async (nombre, mensaje) => {
+    const ref = doc(collection(db, "mensajes"));
+    const b = writeBatch(db);
+    b.set(ref, { nombre, mensaje, fecha: serverTimestamp() });
+    b.set(contadorRef, { total: increment(1), ultimo: ref.id }, { merge: true });
+    await b.commit();
+  };
+}
+
+// Formulario
+$("mensaje").addEventListener("input", e => $("cuenta").textContent = `${e.target.value.length} / 500`);
+$("form").addEventListener("submit", async e => {
+  e.preventDefault();
+  if ($("trampa").value) return;
+  const nombre = $("nombre").value.trim(), mensaje = $("mensaje").value.trim();
+  if (!nombre || !mensaje) { $("estado").textContent = "Escribe tu nombre y tu mensaje."; return; }
+  let ultimo = 0;
+  try { ultimo = +localStorage.getItem("ultimoPapelito") || 0; } catch {}
+  if (Date.now() - ultimo < 60000) { $("estado").textContent = "Espera un minuto antes de dejar otro papelito."; return; }
+
+  $("btn").disabled = true;
+  $("estado").textContent = "Doblando tu papelito…";
+  animando = true;
+  try {
+    await Promise.all([enviar(nombre, mensaje), caer()]);
+    try { localStorage.setItem("ultimoPapelito", Date.now()); } catch {}
+    animando = false; pintar(true);
+    $("form").reset(); $("cuenta").textContent = "0 / 500";
+    $("estado").textContent = "Tu papelito ya está adentro. Gracias.";
+  } catch (err) {
+    animando = false; pintar();
+    $("estado").textContent = "No se pudo enviar. Intenta otra vez.";
+  }
+  $("btn").disabled = false;
+});
+</script>
+</body>
+</html>
