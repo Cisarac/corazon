@@ -30,7 +30,6 @@ button:disabled{opacity:.5;cursor:default}
 @keyframes caer{to{transform:translate(24px,110vh)}}
 @keyframes latir{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
 .latido{transform-origin:160px 170px;animation:latir 4.5s ease-in-out infinite}
-.nuevo{opacity:0;transition:opacity .9s ease}
 </style>
 </head>
 <body>
@@ -158,7 +157,6 @@ function pintar(nuevo = false) {
   while (pintados < meta) {
     const l = lugares[pintados];
     const g = papel(l.x, l.y, l.rot, l.color, l.rayas);
-    if (nuevo) { g.classList.add("nuevo"); requestAnimationFrame(() => requestAnimationFrame(() => g.style.opacity = 1)); }
     cont.appendChild(g);
     pintados++;
   }
